@@ -5,11 +5,10 @@ import './index.css';
 import BookList from './list/bookListConnector';
 import registerServiceWorker from './registerServiceWorker';
 import store from './store/store';
-import { getBooks } from './store/store';
 
 ReactDOM.render(
   <Provider store={store}>
-    <BookList books={getBooks()}/>
+    <BookList />
   </Provider>,
   document.getElementById('root') as HTMLElement
 );

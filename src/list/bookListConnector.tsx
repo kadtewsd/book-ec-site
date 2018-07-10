@@ -1,15 +1,14 @@
 import { connect, } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Book } from '../domain/Book';
-import { BookActionDispatcher } from '../reducer/BookActionDispatcher';
-import store from '../store/store';
+import { BookActionDispatcher, IBookAction } from '../reducer/BookActionDispatcher';
+// import store, { getBooks } from '../store/store';
+import store, { IMerchandice } from '../store/store';
 import BookList from './BookList';
 
 // tslint:disable:no-console
 store.subscribe(() => console.log('subscribe'));
 
-interface IBookReducerCart {
-    cart: Book[]
-}
-const mapDispathToProp = (dispatch: Dispatch<IBookReducerCart>) => (new BookActionDispatcher(dispatch));
-export default connect(null, mapDispathToProp)(BookList);
+// const mapStateToProp = () => ({ books: getBooks() });
+const mapStateToProp = (state: IMerchandice) => ({ books: state.merchandice.books });
+const mapDispathToProp = (dispatch: Dispatch<IBookAction>) => ({ cartAction: new BookActionDispatcher(dispatch) });
+export default connect(mapStateToProp, mapDispathToProp)(BookList);
