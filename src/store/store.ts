@@ -1,4 +1,12 @@
+import { combineReducers, createStore } from 'redux';
 import { Book } from '../domain/Book'
+import cart from '../reducer/bookReducer';
+
+export default createStore(
+    combineReducers({
+        cart,
+    })
+)
 
 export function getBooks(): Book[] {
     const books: Book[] = [
