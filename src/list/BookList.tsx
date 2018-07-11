@@ -6,6 +6,7 @@ import './BookList.css';
 
 interface IBookListProp {
     books: Book[];
+    cart: Book[];
     cartAction: BookActionDispatcher;
 }
 

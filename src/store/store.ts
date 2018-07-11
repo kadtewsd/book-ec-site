@@ -1,5 +1,5 @@
 import { combineReducers, createStore } from 'redux';
-import { IBookAction } from '../reducer/BookActionDispatcher';
+import { ICartState } from '../reducer/BookActionDispatcher';
 import merchandice from '../reducer/bookReducer';
 
 export default createStore(
@@ -15,5 +15,5 @@ export default createStore(
  * reducer の第一引数の型で、store に登録した名前のプロパティを作る。
  */
 export interface IMerchandice {
-    merchandice: IBookAction
+    merchandice: ICartState
 }
