@@ -10,5 +10,7 @@ store.subscribe(() => console.log('subscribe'));
 
 // const mapStateToProp = () => ({ books: getBooks() });
 const mapStateToProp = (state: IMerchandice) => ({ books: state.merchandice.books });
-const mapDispathToProp = (dispatch: Dispatch<IBookAction>) => ({ cartAction: new BookActionDispatcher(dispatch) });
+const mapDispathToProp = (dispatch: Dispatch<IBookAction>) => {
+    return { cartAction: new BookActionDispatcher(dispatch) }
+};
 export default connect(mapStateToProp, mapDispathToProp)(BookList);

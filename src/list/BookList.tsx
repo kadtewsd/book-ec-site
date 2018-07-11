@@ -10,6 +10,9 @@ interface IBookListProp {
 }
 
 class BookList extends React.Component<IBookListProp, {}> {
+    constructor(prop: IBookListProp) {
+        super(prop);
+    }
     public render() {
         return (
             this.props.books.map(book => (

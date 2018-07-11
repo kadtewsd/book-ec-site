@@ -1,4 +1,4 @@
-import { Action } from 'redux';
+import { Action, Dispatch } from 'redux';
 import { Book } from '../domain/Book';
 import { BookReducerType } from './bookReducer';
 
@@ -17,7 +17,8 @@ const addingAction = (asin: string): IAddingToCart => {
 };
 
 export class BookActionDispatcher {
-    constructor(private dispatch: (action: IBookAction) => void) { }
+    constructor(private dispatch: Dispatch<IBookAction>) {
+    }
     public addBook2Cart(isbn: string) {
         this.dispatch(addingAction(isbn));
     }

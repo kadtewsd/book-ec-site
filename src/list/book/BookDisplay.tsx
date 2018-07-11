@@ -4,16 +4,17 @@ import { BookActionDispatcher } from '../../reducer/BookActionDispatcher';
 
 export interface IBookProp {
     book: Book;
-    cartAction: BookActionDispatcher 
+    cartAction: BookActionDispatcher
 }
 interface IImageEvent extends React.MouseEvent<HTMLImageElement> {
     target: HTMLImageElement;
-} 
+}
 class BookDisplay extends React.Component<IBookProp, {}> {
-    private addBook2Cart: (event: IImageEvent) => void;
     constructor(prop: IBookProp) {
         super(prop);
-        this.addBook2Cart = prop.cartAction.addBook2Cart.bind(this, prop.book.isbn);
+        // this.addBook2Cart = prop.cartAction.addBook2Cart.bind(this, prop.book.isbn);
+        // bind しないと addBook2Cart 関数がコールされた際の this は undefined になる。コンテキストを BookDisplay クラスにするため bind する。
+        this.addBook2Cart = this.addBook2Cart.bind(this);
     }
     public render() {
         return (
@@ -22,6 +23,9 @@ class BookDisplay extends React.Component<IBookProp, {}> {
                 <img src={this.props.book.url} onClick={this.addBook2Cart} />
             </div>
         );
+    }
+    private addBook2Cart(event: IImageEvent) {
+        this.props.cartAction.addBook2Cart(this.props.book.isbn);
     }
 }
 
