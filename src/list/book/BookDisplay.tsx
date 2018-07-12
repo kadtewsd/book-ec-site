@@ -6,8 +6,12 @@ export interface IBookProp {
     book: Book;
     cartAction: BookActionDispatcher
 }
-interface IImageEvent extends React.MouseEvent<HTMLImageElement> {
-    target: HTMLImageElement;
+// interface IImageEvent extends React.MouseEvent<HTMLImageElement> {
+//     target: HTMLImageElement;
+// }
+
+interface IImageEvent extends React.MouseEvent<HTMLAnchorElement> {
+    target: HTMLAnchorElement;
 }
 class BookDisplay extends React.Component<IBookProp, {}> {
     constructor(prop: IBookProp) {
@@ -20,7 +24,9 @@ class BookDisplay extends React.Component<IBookProp, {}> {
         return (
             <div>
                 <ul>{this.props.book.title}</ul>
-                <img src={this.props.book.url} onClick={this.addBook2Cart} />
+                <a href="/" onClick={this.addBook2Cart} >
+                    <img src={this.props.book.url} />
+                </a>
             </div>
         );
     }

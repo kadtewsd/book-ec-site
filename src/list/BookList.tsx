@@ -16,11 +16,14 @@ class BookList extends React.Component<IBookListProp, {}> {
     }
     public render() {
         return (
-            this.props.books.map(book => (
-                <div className="list-centering">
-                    <BookDisplay key={book.isbn} book={book} cartAction={this.props.cartAction}/>
-                </div>
-            ))
+            <div>
+                <a href="/">Go To Top Page</a>
+                {this.props.books.map(book => (
+                    <div className="list-centering">
+                        <BookDisplay key={book.isbn} book={book} cartAction={this.props.cartAction} />
+                    </div>
+                ))}
+            </div>
         );
     }
 }
