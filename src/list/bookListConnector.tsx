@@ -3,11 +3,11 @@ import { Dispatch } from 'redux';
 import {Book} from '../domain/Book';
 import { BookActionDispatcher, IBookAction } from '../reducer/BookActionDispatcher';
 // import store, { getBooks } from '../store/store';
-import store, { IMerchandice } from '../store/store';
+import  { IMerchandice } from '../store/store';
 import BookList from './BookList';
 
 // tslint:disable:no-console
-store.subscribe(() => console.log('subscribe'));
+// store().subscribe(() => console.log('subscribe'));
 
 export function getBooks(): Book[] {
     const allBooks: Book[] = [

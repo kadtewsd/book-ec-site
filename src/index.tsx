@@ -21,7 +21,7 @@ const Routes = () => (
   </Switch>
 )
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={store()}>
     <BrowserRouter>
         <Routes />
     </BrowserRouter>
