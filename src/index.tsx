@@ -1,13 +1,18 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { } from 'react-router-dom'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import {
+  // BrowserRouter, 
+  Route,
+  Router,
+  Switch
+} from 'react-router-dom'
+// import { Route } from "react-router";
 import App from './App';
 import './index.css';
 import BookList from './list/bookListConnector';
 import registerServiceWorker from './registerServiceWorker';
-import store from './store/store';
+import store, { history } from './store/store';
 
 /**
  * router を定義します。
@@ -15,16 +20,17 @@ import store from './store/store';
  * /bookList でも App が開いてしまいます。
  */
 const Routes = () => (
-  <Switch>
-    <Route exact={true} path="/" component={App} />
-    <Route path="/bookList" component={BookList} />
-  </Switch>
+  <Router history={history()}>
+    <Switch>
+      <Route exact={true} path="/" component={App} />
+      <Route path="/bookList" component={BookList} />
+    </Switch>
+  </Router>
 )
+
 ReactDOM.render(
   <Provider store={store()}>
-    <BrowserRouter>
-        <Routes />
-    </BrowserRouter>
+    <Routes />
   </Provider>,
   document.getElementById('root') as HTMLElement
 );
