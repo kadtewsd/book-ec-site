@@ -1,18 +1,20 @@
 import * as React from 'react';
+import { push } from 'react-router-redux'
 import { Book } from '../../domain/Book'
 import { BookActionDispatcher } from '../../reducer/BookActionDispatcher';
+import store from '../../store/store';
 
 export interface IBookProp {
     book: Book;
     cartAction: BookActionDispatcher
 }
-// interface IImageEvent extends React.MouseEvent<HTMLImageElement> {
-//     target: HTMLImageElement;
-// }
-
-interface IImageEvent extends React.MouseEvent<HTMLAnchorElement> {
-    target: HTMLAnchorElement;
+interface IImageEvent extends React.MouseEvent<HTMLImageElement> {
+    target: HTMLImageElement;
 }
+
+// interface IImageEvent extends React.MouseEvent<HTMLAnchorElement> {
+//     target: HTMLAnchorElement;
+// }
 class BookDisplay extends React.Component<IBookProp, {}> {
     constructor(prop: IBookProp) {
         super(prop);
@@ -24,14 +26,13 @@ class BookDisplay extends React.Component<IBookProp, {}> {
         return (
             <div>
                 <ul>{this.props.book.title}</ul>
-                <a href="/" onClick={this.addBook2Cart} >
-                    <img src={this.props.book.url} />
-                </a>
+                <img src={this.props.book.url} onClick={this.addBook2Cart} />
             </div>
         );
     }
     private addBook2Cart(event: IImageEvent) {
         this.props.cartAction.addBook2Cart(this.props.book.isbn);
+        store.dispatch(push("/"));
     }
 }
 

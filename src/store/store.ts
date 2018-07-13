@@ -2,17 +2,19 @@ import createHistory from "history/createBrowserHistory";
 import {
     routerMiddleware,
     routerReducer,
-  } from "react-router-redux";
+} from "react-router-redux";
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { ICartState } from '../reducer/BookActionDispatcher';
 import merchandice from '../reducer/bookReducer';
 
 // Create a history of your choosing (we're using a browser history in this case)
-const h = createHistory();
-
+export const history = createHistory();
+// export function history() {
+//     return h;
+// }
 // Build the middleware for intercepting and dispatching navigation actions
-const middleware = routerMiddleware(h);
-const s = createStore(
+const middleware = routerMiddleware(history);
+export default createStore(
     /**
      * reducer を merchandice という名前で登録
      */
@@ -22,13 +24,6 @@ const s = createStore(
     }),
     applyMiddleware(middleware)
 )
-export default function store() {
-    return s;
-}
-
-export function history() {
-    return h;
-}
 
 /**
  * reducer の第一引数の型で、store に登録した名前のプロパティを作る。

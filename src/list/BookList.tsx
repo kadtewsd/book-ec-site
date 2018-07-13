@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Link } from 'react-router-dom';
 import { Book } from '../domain/Book';
 import { BookActionDispatcher } from '../reducer/BookActionDispatcher';
 import BookDisplay from './book/BookDisplay';
@@ -17,7 +18,7 @@ class BookList extends React.Component<IBookListProp, {}> {
     public render() {
         return (
             <div>
-                <a href="/">Go To Top Page</a>
+                <Link to={"/"}>Go To Top Page</Link>
                 {this.props.books.map(book => (
                     <div className="list-centering">
                         <BookDisplay key={book.isbn} book={book} cartAction={this.props.cartAction} />

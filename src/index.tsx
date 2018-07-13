@@ -20,7 +20,7 @@ import store, { history } from './store/store';
  * /bookList でも App が開いてしまいます。
  */
 const Routes = () => (
-  <Router history={history()}>
+  <Router history={history}>
     <Switch>
       <Route exact={true} path="/" component={App} />
       <Route path="/bookList" component={BookList} />
@@ -29,7 +29,7 @@ const Routes = () => (
 )
 
 ReactDOM.render(
-  <Provider store={store()}>
+  <Provider store={store}>
     <Routes />
   </Provider>,
   document.getElementById('root') as HTMLElement
