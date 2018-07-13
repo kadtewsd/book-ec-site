@@ -14,8 +14,9 @@ const initialState: ICartState = { cart: [] };
 const bookReducer = (state: ICartState = initialState, action: IBookAction) => {
     switch (action.type) {
         case BookReducerType.ADD:
-            const book = getBooks().filter(x => x.isbn === action.isbn)
-            return { ...state, cart: [...state.cart, book] }
+            const book = getBooks().filter(x => x.isbn === action.isbn);
+            // filter の戻り値は配列なので book は配列として生成されている。そのため、スプレッドを book にも使う。
+            return {cart: [...state.cart, ...book] }
         default:
             return state;
     }
