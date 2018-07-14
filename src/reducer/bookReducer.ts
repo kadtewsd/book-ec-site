@@ -1,8 +1,9 @@
 import { getBooks } from '../list/bookListConnector';
-import { IBookAction, ICartState } from './BookActionDispatcher'
+import { IAddingToCart, IBookAction, ICartState,  } from './BookActionDispatcher'
 
 export enum BookReducerType {
     INITIAL,
+    SHOW,
     ADD
 }
 const initialState: ICartState = { cart: [] };
@@ -14,9 +15,11 @@ const initialState: ICartState = { cart: [] };
 const bookReducer = (state: ICartState = initialState, action: IBookAction) => {
     switch (action.type) {
         case BookReducerType.ADD:
-            const book = getBooks().filter(x => x.isbn === action.isbn);
+            const book = getBooks().filter(x => x.isbn === (action as IAddingToCart).isbn);
             // filter の戻り値は配列なので book は配列として生成されている。そのため、スプレッドを book にも使う。
-            return {cart: [...state.cart, ...book] }
+            return { cart: [...state.cart, ...book] }
+        case BookReducerType.SHOW:
+            return {cart: state.cart};
         default:
             return state;
     }

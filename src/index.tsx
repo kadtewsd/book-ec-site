@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom'
 // import { Route } from "react-router";
 import App from './App';
+import CartList from './cart/cartListConnector';
 import './index.css';
 import BookList from './list/bookListConnector';
 import registerServiceWorker from './registerServiceWorker';
@@ -24,6 +25,7 @@ const Routes = () => (
     <Switch>
       <Route exact={true} path="/" component={App} />
       <Route path="/bookList" component={BookList} />
+      <Route path="/cartList" component={CartList} />
     </Switch>
   </Router>
 )

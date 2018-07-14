@@ -6,10 +6,11 @@ export interface ICartState {
     cart: Book[],
 }
 export interface IBookAction extends Action {
-    isbn: string
     type: BookReducerType,
 };
-export type IAddingToCart = IBookAction;
+export interface IAddingToCart extends IBookAction {
+    isbn: string
+}
 const addingAction = (asin: string): IAddingToCart => {
     return {
         isbn: asin,
@@ -17,10 +18,21 @@ const addingAction = (asin: string): IAddingToCart => {
     }
 };
 
+export type IShowigCart = IBookAction;
+
+const showingAction = (): IShowigCart => {
+    return {
+        type: BookReducerType.SHOW,
+    }
+}
+
 export class BookActionDispatcher {
     constructor(private dispatch: Dispatch<IBookAction>) {
     }
     public addBook2Cart(isbn: string) {
         this.dispatch(addingAction(isbn));
+    }
+    public showCart() {
+        return this.dispatch(showingAction());
     }
 }

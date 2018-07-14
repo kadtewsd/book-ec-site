@@ -32,7 +32,10 @@ class BookDisplay extends React.Component<IBookProp, {}> {
     }
     private addBook2Cart(event: IImageEvent) {
         this.props.cartAction.addBook2Cart(this.props.book.isbn);
-        store.dispatch(push("/"));
+        // this results undefined because IShowigCart which does not have cart property, merely action, is returned.
+        // const cart = this.props.cartAction.showCart();
+        // connect function will pass cart state to component...
+        store.dispatch(push("/cartList"));
     }
 }
 
