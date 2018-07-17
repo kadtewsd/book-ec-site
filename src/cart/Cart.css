@@ -1,0 +1,42 @@
+div {
+    display: block;
+}
+.list-root {
+    padding-left: 110px;
+    width: 100%;
+    height: 100px;
+}
+.image-float {
+    /* img も float で左寄せにしないといい感じで全てが回り込まない*/
+    float: left;
+}
+.list-item-row {
+    display: table;
+}
+.list-item-border {
+     border-bottom: 1px solid #DDD;
+     border-top: 1px solid #DDD;
+}
+
+.image-size {
+    width: 100px;
+    height: 150px;
+}
+
+.margin-area {
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
+.marchant-description {
+    float: left;
+}
+
+.marchant-price {
+    margin-left: 660px;
+    margin-top: 40px;
+    font-weight: bold;
+    font-size: 20pt;
+    color: red;
+    float: left;
+}
