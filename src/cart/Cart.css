@@ -1,6 +1,9 @@
 div {
     display: block;
 }
+li {
+    list-style: none;
+}
 .list-root {
     padding-left: 110px;
     width: 100%;
