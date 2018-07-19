@@ -28,6 +28,10 @@ div {
     margin-bottom: 14px;
 }
 
+.item-count-box {
+    width: 50px;
+}
+
 .marchant-description {
     float: left;
 }

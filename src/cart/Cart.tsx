@@ -40,7 +40,7 @@ class Cart extends React.Component<ICartProp, {}> {
         return (
             <div>
                 <Link to={"/bookList"}>Go To Shopping Page</Link>
-                {this.props.cart.map(book => (
+                {this.props.cart.filter((value, index, array) => index === array.findIndex((innerValue) => value.isbn === innerValue.isbn)).map(book => (
                     <div className="list-root list-item-row list-item-border">
                         <div className="margin-area">
                             <div className="image-float">
@@ -51,16 +51,22 @@ class Cart extends React.Component<ICartProp, {}> {
                                     <li key={book.isbn}>
                                         <span>{book.title} </span>
                                     </li>
+                                    <li>
+                                        <input className="item-count-box" type="text" value={this.itemCount(book.isbn)} />個
+                                    </li>
                                 </ul>
                             </div>
                             <div className="marchant-price">
-                                ¥{book.price}
+                                ¥{book.price * this.itemCount(book.isbn)}
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
         )
+    }
+    private itemCount(isbn: string): number {
+        return this.props.cart.filter((value) => value.isbn === isbn).length;
     }
 }
 
