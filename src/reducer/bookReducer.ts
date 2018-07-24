@@ -1,11 +1,20 @@
-import { getBooks } from '../list/bookListConnector';
-import { IAddingToCart, IBookAction, ICartState,  } from './BookActionDispatcher'
+import { Book } from '../domain/Book';
+import { IBookAction, ICartState, } from './BookActionDispatcher'
 
-export enum BookReducerType {
+/**
+ * enum does not support extended enum in Java 
+ */
+export enum BookReducerHanlerType {
     INITIAL,
     SHOW,
-    ADD
+    ADD,
+    CHANGE,
 }
+export interface IHandleBookReducer {
+    toString(): string
+    handle(state: ICartState, action: IBookAction): { cart: Book[] }
+}
+
 const initialState: ICartState = { cart: [] };
 /**
  * reducer です。
@@ -13,16 +22,6 @@ const initialState: ICartState = { cart: [] };
  * @param action 状態に対するアクションの指示を受け取ります。
  */
 const bookReducer = (state: ICartState = initialState, action: IBookAction) => {
-    switch (action.type) {
-        case BookReducerType.ADD:
-            const book = getBooks().filter(x => x.isbn === (action as IAddingToCart).isbn);
-            // filter の戻り値は配列なので book は配列として生成されている。そのため、スプレッドを book にも使う。
-            return { cart: [...state.cart, ...book] }
-        case BookReducerType.SHOW:
-            return {cart: state.cart};
-        default:
-            return state;
-    }
-
+    return action.type.toString().indexOf('redux') !== -1 ? state : action.type.handle(state, action);
 }
 export default bookReducer;

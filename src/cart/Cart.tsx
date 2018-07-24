@@ -4,12 +4,16 @@ import { Book } from '../domain/Book';
 import './Cart.css';
 
 interface ICartProp {
-    cart: Book[]
+    cart: Book[],
+    changeCart: (quantity: number) => void
 }
 
 class Cart extends React.Component<ICartProp, {}> {
+    private changeCart: (quantity: number) => void;
+
     constructor(prop: ICartProp) {
         super(prop);
+        // this.changeCart = this.props.changeCart.bind(this)
     }
     /**
      * カートの中身を表示します。
@@ -54,6 +58,9 @@ class Cart extends React.Component<ICartProp, {}> {
                                     <li>
                                         <input className="item-count-box" type="text" value={this.itemCount(book.isbn)} />個
                                     </li>
+                                    <li className="cart-change">
+                                        <button onClick={this.change(this.itemCount(book.isbn))}>変更</button>
+                                    </li>
                                 </ul>
                             </div>
                             <div className="marchant-price">
@@ -68,6 +75,8 @@ class Cart extends React.Component<ICartProp, {}> {
     private itemCount(isbn: string): number {
         return this.props.cart.filter((value) => value.isbn === isbn).length;
     }
+
+    private change = (quantity: number) => () => this.changeCart(quantity);
 }
 
 export default Cart;

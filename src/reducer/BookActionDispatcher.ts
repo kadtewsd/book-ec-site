@@ -1,20 +1,34 @@
 import { Action, Dispatch } from 'redux';
 import { Book } from '../domain/Book';
-import { BookReducerType } from './bookReducer';
+import AddBookReducerType from '../reducer/handler/AddBookReducerType'
+import ChangeBookReducerType from '../reducer/handler/ChangeBookReducerType'
+import ShowBookReducerType from '../reducer/handler/ShowBookReducerType'
+import { IHandleBookReducer } from './bookReducer';
 
 export interface ICartState {
     cart: Book[],
 }
 export interface IBookAction extends Action {
-    type: BookReducerType,
+    type: IHandleBookReducer,
 };
 export interface IAddingToCart extends IBookAction {
+    isbn: string
+}
+
+export interface IChangingToCart extends IBookAction {
     isbn: string
 }
 const addingAction = (asin: string): IAddingToCart => {
     return {
         isbn: asin,
-        type: BookReducerType.ADD,
+        type: new AddBookReducerType(),
+    }
+};
+
+const changingAction = (asin: string, changed: number): IChangingToCart => {
+    return {
+        isbn: asin,
+        type: new ChangeBookReducerType(changed),
     }
 };
 
@@ -22,7 +36,7 @@ export type IShowigCart = IBookAction;
 
 const showingAction = (): IShowigCart => {
     return {
-        type: BookReducerType.SHOW,
+        type: new ShowBookReducerType(),
     }
 }
 
@@ -34,5 +48,8 @@ export class BookActionDispatcher {
     }
     public showCart() {
         return this.dispatch(showingAction());
+    }
+    public changeCart(isbn: string, quantity: number) {
+        return this.dispatch(changingAction(isbn, quantity));
     }
 }

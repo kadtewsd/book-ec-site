@@ -40,6 +40,11 @@ li {
     float: left;
 }
 
+.cart-change {
+    margin-top: 20px;
+    float: left;
+}
+
 .marchant-price {
     margin-left: 660px;
     margin-top: 40px;
