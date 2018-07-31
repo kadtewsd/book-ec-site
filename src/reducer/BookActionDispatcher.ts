@@ -28,7 +28,7 @@ const addingAction = (asin: string): IAddingToCart => {
 const changingAction = (asin: string, changed: number): IChangingToCart => {
     return {
         isbn: asin,
-        type: new ChangeBookReducerType(changed),
+        type: new ChangeBookReducerType(asin, changed),
     }
 };
 
