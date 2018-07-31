@@ -15,7 +15,7 @@ class ChangeBookReducerType implements IHandleBookReducer {
             (index: number, array: Book[]) => array.push(array[index]);
         const cart = this.addOrRemove(results, func);
         // filter の戻り値は配列なので book は配列として生成されている。そのため、スプレッドを book にも使う。
-        return { cart }
+        return { cart: [... state.cart.filter((book) => cart.find((book1) => book.isbn !== book1.isbn)), ...cart] }
     }
 
     private addOrRemove(results: Book[], func: (index: number, array: Book[]) => any): Book[] {
