@@ -29,7 +29,7 @@ class CartContent extends React.Component<ICartProp, ICartState> {
     private changeInputBox = ((e: React.FormEvent<HTMLInputElement>) => {
         const quantity = (e.target as HTMLInputElement).value;
         this.setState({
-            quantity: quantity === "" ?  "0" : quantity,
+            quantity: quantity === "" ? "0" : quantity,
         });
     });
 
@@ -82,7 +82,9 @@ class CartContent extends React.Component<ICartProp, ICartState> {
                     </ul>
                 </div>
                 <div className="marchant-price">
-                    ¥{this.props.cart.price * this.props.quantity}
+                    <div className="price-div">
+                        ¥{this.props.cart.price * this.props.quantity}
+                    </div>
                 </div>
             </div>
         )
