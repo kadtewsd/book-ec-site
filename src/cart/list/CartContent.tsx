@@ -28,6 +28,9 @@ class CartContent extends React.Component<ICartProp, ICartState> {
      */
     private changeInputBox = ((e: React.FormEvent<HTMLInputElement>) => {
         const quantity = (e.target as HTMLInputElement).value;
+        if (isNaN(Number.parseInt(quantity)))  {
+            return;
+        }
         this.setState({
             quantity: quantity === "" ? "0" : quantity,
         });
