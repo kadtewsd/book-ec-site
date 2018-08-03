@@ -27,8 +27,9 @@ class CartContent extends React.Component<ICartProp, ICartState> {
      * 関数を定義するといい感じでイベントオブジェクトが渡ってきます。
      */
     private changeInputBox = ((e: React.FormEvent<HTMLInputElement>) => {
+        const quantity = (e.target as HTMLInputElement).value;
         this.setState({
-            quantity: (e.target as HTMLInputElement).value,
+            quantity: quantity === "" ?  "0" : quantity,
         });
     });
 
