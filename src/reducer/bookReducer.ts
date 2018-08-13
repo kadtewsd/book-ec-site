@@ -1,4 +1,4 @@
-import { Book } from '../domain/Book';
+import CartDetail from '../domain/CartDetail';
 import { IBookAction, ICartState, } from './BookActionDispatcher'
 
 /**
@@ -12,10 +12,10 @@ export enum BookReducerHanlerType {
 }
 export interface IHandleBookReducer {
     toString(): string
-    handle(state: ICartState, action: IBookAction): { cart: Book[] }
+    handle(state: ICartState, action: IBookAction): {cart: CartDetail[]}
 }
 
-const initialState: ICartState = { cart: [] };
+const initialState: ICartState =  {cart: []}
 /**
  * reducer です。
  * @param state 状態を引数に受け取ります。 

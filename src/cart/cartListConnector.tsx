@@ -1,4 +1,4 @@
-import { connect, } from 'react-redux';
+import { connect } from 'react-redux';
 import { Dispatch } from '../../node_modules/redux';
 import { BookActionDispatcher, IBookAction } from '../reducer/BookActionDispatcher';
 import { IMerchandice } from '../store/store';

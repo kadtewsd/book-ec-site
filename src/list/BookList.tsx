@@ -1,13 +1,14 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom';
 import { Book } from '../domain/Book';
+import CartDetail from '../domain/CartDetail';
 import { BookActionDispatcher } from '../reducer/BookActionDispatcher';
 import BookDisplay from './book/BookDisplay';
 import './BookList.css';
 
 interface IBookListProp {
     books: Book[];
-    cart: Book[];
+    cart: CartDetail[],
     cartAction: BookActionDispatcher;
 }
 

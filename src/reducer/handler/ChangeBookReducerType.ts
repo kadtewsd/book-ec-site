@@ -1,4 +1,4 @@
-import { Book } from '../../domain/Book'
+import CartDetail from '../../domain/CartDetail';
 import { ICartState, } from '../BookActionDispatcher'
 import { IBookAction } from '../BookActionDispatcher'
 import { BookReducerHanlerType } from '../bookReducer'
@@ -9,52 +9,27 @@ class ChangeBookReducerType implements IHandleBookReducer {
     public toString() {
         return BookReducerHanlerType.CHANGE.toString();
     }
-    public handle(state: ICartState, action: IBookAction): { cart: Book[] } {
+    public handle(state: ICartState, action: IBookAction): {cart: CartDetail[]} {
         if (this.quantity === 0) {
-            return this.removeTheItem(state);
+            return {cart: this.removeTheItem(state)};
         }
-        const results = state.cart.filter(book => book.isbn === this.asin);
-        const cart = this.addOrRemove(results);
-        // filter の戻り値は配列なので book は配列として生成されている。そのため、スプレッドを book にも使う。
-        return { cart: [...state.cart.filter((book) => cart.find((book1) => book.isbn !== book1.isbn)), ...cart] }
+        for (const item of state.cart) {
+            if (item.book.id === this.asin) {
+                item.newQuantity(this.quantity);
+                break;
+            }
+        }
+        return {cart: state.cart};
     }
 
-    private removeTheItem(state: ICartState) {
-        const books: Book[] = [];
+    private removeTheItem(state: ICartState): CartDetail[] {
+        const books: CartDetail[] = [];
         state.cart.forEach((book, index, array) => {
-            if (book.isbn !== this.asin) {
+            if (book.book.id !== this.asin) {
                 books.push(book);
             }
         })
-        return { cart: books }
-    }
-
-    private addOrRemove(results: Book[]): Book[] {
-        if (this.quantity === results.length) {
-            return results;
-        }
-        if (this.quantity < results.length) {
-            this.remove(results);
-        } else {
-            this.add(results);
-        }
-        return results
-    }
-
-    private add(results: Book[]) {
-        const loopCount = this.quantity - results.length;
-        const func = (index: number, array: Book[]) => array.push(array[index]);
-        for (let i = 0; i < loopCount; i++) {
-            func(i, results);
-        }
-    }
-
-    private remove(results: Book[]) {
-        const loopCount = results.length - this.quantity
-        const func = (index: number, array: Book[]) => array.splice(index, 1);
-        for (let i = loopCount; 0 < i; i--) {
-            func(i, results);
-        }
+        return books;
     }
 }
 

@@ -20,7 +20,10 @@ export function getBooks(): Book[] {
     return allBooks;
 };
 // const mapStateToProp = () => ({ books: getBooks() });
-const mapStateToProp = (state: IMerchandice) => ({ cart: state.merchandice.cart, books: getBooks() });
+const mapStateToProp = (state: IMerchandice) => ({ 
+    books: getBooks(),
+    cart: state.merchandice.cart
+});
 const mapDispathToProp = (dispatch: Dispatch<IBookAction>) => {
     return { cartAction: new BookActionDispatcher(dispatch) }
 };

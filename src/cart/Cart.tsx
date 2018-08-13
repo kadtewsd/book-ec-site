@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Book } from '../domain/Book';
+import CartDetail from '../domain/CartDetail';
 import { BookActionDispatcher } from '../reducer/BookActionDispatcher';
 import './Cart.css';
 import CartContent from './list/CartContent';
 
 interface ICartProp {
-    cart: Book[],
+    cart: CartDetail[],
     changeDispatcher: BookActionDispatcher
 }
 // interface IChangeCountEvent extends React.MouseEvent<HTMLButtonElement> {
@@ -48,17 +48,13 @@ class Cart extends React.Component<ICartProp, {}> {
         return (
             <div>
                 <Link to={"/bookList"}>Go To Shopping Page</Link>
-                {this.props.cart.filter((value, index, array) => index === array.findIndex((innerValue) => value.isbn === innerValue.isbn)).map(book => (
+                {this.props.cart.filter((value, index, array) => index === array.findIndex((innerValue) => value.book.id === innerValue.book.id)).map(book => (
                     <div className="list-root list-item-row list-item-border">
-                        <CartContent cart={book} changeDispatcher={this.props.changeDispatcher} quantity={this.itemCount(book.isbn)} />
+                        <CartContent cart={book} changeDispatcher={this.props.changeDispatcher} />
                     </div>
                 ))}
             </div>
         )
-    }
-
-    private itemCount(isbn: string): number {
-        return this.props.cart.filter((value) => value.isbn === isbn).length;
     }
 }
 

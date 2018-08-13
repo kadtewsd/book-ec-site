@@ -1,22 +1,22 @@
 import * as React from 'react';
 import { push } from 'react-router-redux'
-import { Book } from '../../domain/Book';
+import {Book} from '../../domain/Book';
+import CartDetail from '../../domain/CartDetail';
 import { BookActionDispatcher } from '../../reducer/BookActionDispatcher';
 import store from '../../store/store';
 
 interface ICartProp {
-    cart: Book,
-    quantity: number,
+    cart: CartDetail,
     changeDispatcher: BookActionDispatcher
 }
 
 interface ICartState {
-    quantity: string;
+    itemQuantity: string;
 }
 
 class CartContent extends React.Component<ICartProp, ICartState> {
 
-    // private changeBook = (event: IChangeCountEvent) => ((isbn: string, quantity: number) => this.changeItemCount(isbn, quantity));
+    // private changeBook = (event: IChangeCountEvent) => ((isbn: string, itemQuantity: number) => this.changeItemCount(isbn, itemQuantity));
 
     // 関数を返す関数を作ったら普通に onChange={changeInputBox()} と書く必要がありますが、無意味に遅延実行する必要はありません。うんともすんともいいません。
     // private changeInputBox = ((e: React.FormEvent<HTMLInputElement>) => () => {
@@ -27,12 +27,12 @@ class CartContent extends React.Component<ICartProp, ICartState> {
      * 関数を定義するといい感じでイベントオブジェクトが渡ってきます。
      */
     private changeInputBox = ((e: React.FormEvent<HTMLInputElement>) => {
-        const quantity = (e.target as HTMLInputElement).value;
-        if (isNaN(Number.parseInt(quantity)))  {
+        const itemQuantity = (e.target as HTMLInputElement).value;
+        if (isNaN(Number.parseInt(itemQuantity)))  {
             return;
         }
         this.setState({
-            quantity: quantity === "" ? "0" : quantity,
+            itemQuantity: itemQuantity === "" ? "0" : itemQuantity,
         });
     });
 
@@ -41,38 +41,42 @@ class CartContent extends React.Component<ICartProp, ICartState> {
      * 関数に引数を渡したいので、遅延実行される関数を定義します。
      * 関数を指定するのは
      */
-    private changeBook = ((isbn: string, quantity: number) => () => {
-        this.props.changeDispatcher.changeCart(isbn, quantity);
+    private changeBook = ((isbn: string, itemQuantity: number) => () => {
+        this.props.changeDispatcher.changeCart(isbn, itemQuantity);
         store.dispatch(push("/cartList"));
     });
 
     private toQuantity = ((): number => {
-        return Number.parseInt(this.state.quantity);
+        return Number.parseInt(this.state.itemQuantity);
     });
 
     constructor(props: ICartProp, state: ICartState) {
         super(props, state);
         // コンストラクタの初期化では setState はつかわない。
-        // setState をしても、後のコンテキストで this.state.quantity とすると NullPointer エラーになってしまう。
+        // setState をしても、後のコンテキストで this.state.itemQuantity とすると NullPointer エラーになってしまう。
         // this.setState({
-        //     quantity: this.props.quantity.toString(),
+        //     itemQuantity: this.props.itemQuantity.toString(),
         // })
         this.state = {
-            quantity: this.props.quantity.toString(),
+            itemQuantity: this.props.cart.itemQuantity.toString(),
         }
         this.changeBook = this.changeBook.bind(this)
         this.changeInputBox = this.changeInputBox.bind(this);
     }
     public render() {
+        if (!this.props.cart.book.hasMerchant()) {
+            return;
+        }
+        const book = this.props.cart.book as Book;
         return (
             <div>
                 <div className="image-float">
-                    <img className="image-size" alt={this.props.cart.title} src={this.props.cart.url} />
+                    <img className="image-size" alt={book.title} src={book.url} />
                 </div>
                 <div className="marchant-description">
                     <ul>
-                        <li key={this.props.cart.isbn}>
-                            <span>{this.props.cart.title} </span>
+                        <li key={book.isbn}>
+                            <span>{book.title} </span>
                         </li>
                         <li>
                             {/* react ではテキストボックスの値の変更は自然に行えない。change イベントでステートを変更 (setState) すべし*/}
@@ -80,13 +84,13 @@ class CartContent extends React.Component<ICartProp, ICartState> {
                             <input className="item-count-box" type="text" value={this.toQuantity()} onChange={this.changeInputBox} />個
                                     </li>
                         <li className="cart-change">
-                            <button onClick={this.changeBook(this.props.cart.isbn, this.toQuantity())}>変更</button>
+                            <button onClick={this.changeBook(book.isbn, this.toQuantity())}>変更</button>
                         </li>
                     </ul>
                 </div>
                 <div className="marchant-price">
                     <div className="price-div">
-                        ¥{this.props.cart.price * this.props.quantity}
+                        ¥{book.price * this.props.cart.itemQuantity}
                     </div>
                 </div>
             </div>

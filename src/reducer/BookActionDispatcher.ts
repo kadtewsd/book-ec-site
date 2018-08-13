@@ -1,13 +1,14 @@
 import { Action, Dispatch } from 'redux';
-import { Book } from '../domain/Book';
+import CartDetail from '../domain/CartDetail';
 import AddBookReducerType from '../reducer/handler/AddBookReducerType'
 import ChangeBookReducerType from '../reducer/handler/ChangeBookReducerType'
 import ShowBookReducerType from '../reducer/handler/ShowBookReducerType'
 import { IHandleBookReducer } from './bookReducer';
 
 export interface ICartState {
-    cart: Book[],
+    cart: CartDetail[]
 }
+
 export interface IBookAction extends Action {
     type: IHandleBookReducer,
 };
