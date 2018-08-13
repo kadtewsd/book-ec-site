@@ -14,6 +14,10 @@ interface ICartState {
     itemQuantity: string;
 }
 
+interface IFocustEvent extends React.FocusEvent<HTMLInputElement> {
+    target: HTMLInputElement;
+}
+
 class CartContent extends React.Component<ICartProp, ICartState> {
 
     // private changeBook = (event: IChangeCountEvent) => ((isbn: string, itemQuantity: number) => this.changeItemCount(isbn, itemQuantity));
@@ -49,7 +53,6 @@ class CartContent extends React.Component<ICartProp, ICartState> {
     private toQuantity = ((): number => {
         return Number.parseInt(this.state.itemQuantity);
     });
-
     constructor(props: ICartProp, state: ICartState) {
         super(props, state);
         // コンストラクタの初期化では setState はつかわない。
@@ -81,7 +84,7 @@ class CartContent extends React.Component<ICartProp, ICartState> {
                         <li>
                             {/* react ではテキストボックスの値の変更は自然に行えない。change イベントでステートを変更 (setState) すべし*/}
                             {/* <input className="item-count-box" type="text" value={this.itemCount(book.isbn)} />個 */}
-                            <input className="item-count-box" type="text" value={this.toQuantity()} onChange={this.changeInputBox} />個
+                            <input className="item-count-box" type="text" value={this.toQuantity()} onChange={this.changeInputBox} onFocus={this.handleFocus}/>個
                                     </li>
                         <li className="cart-change">
                             <button onClick={this.changeBook(book.isbn, this.toQuantity())}>変更</button>
@@ -96,5 +99,9 @@ class CartContent extends React.Component<ICartProp, ICartState> {
             </div>
         )
     }
+    private handleFocus(event: IFocustEvent) {
+        event.target.select();
+    }
+
 }
 export default CartContent;
