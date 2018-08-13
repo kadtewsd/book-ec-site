@@ -11,7 +11,12 @@ class AddBookReducerType implements IHandleBookReducer {
         return BookReducerHanlerType.ADD.toString();
     }
     public handle(state: ICartState, action: IBookAction): {cart: CartDetail[]} {
-        const book = getBooks().filter(x => x.isbn === (action as IAddingToCart).isbn);
+        const adding = action as IAddingToCart;
+        const count = state.cart.filter(item => item.book.id === adding.isbn).length;
+        if (count !== 0) {
+            return {cart: state.cart};
+        }
+        const book = getBooks().filter(x => x.isbn === adding.isbn);
         return {cart: [... [new CartDetail(book[0], 1)], ... state.cart]}
     }
 }
