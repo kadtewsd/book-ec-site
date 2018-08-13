@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { push } from 'react-router-redux'
-import {Book} from '../../domain/Book';
+import { Book } from '../../domain/Book';
 import CartDetail from '../../domain/CartDetail';
 import { BookActionDispatcher } from '../../reducer/BookActionDispatcher';
 import store from '../../store/store';
@@ -32,7 +32,10 @@ class CartContent extends React.Component<ICartProp, ICartState> {
      */
     private changeInputBox = ((e: React.FormEvent<HTMLInputElement>) => {
         const itemQuantity = (e.target as HTMLInputElement).value;
-        if (isNaN(Number.parseInt(itemQuantity)))  {
+        if (isNaN(Number.parseInt(itemQuantity))) {
+            this.setState({
+                itemQuantity: "0"
+            });
             return;
         }
         this.setState({
@@ -84,7 +87,7 @@ class CartContent extends React.Component<ICartProp, ICartState> {
                         <li>
                             {/* react ではテキストボックスの値の変更は自然に行えない。change イベントでステートを変更 (setState) すべし*/}
                             {/* <input className="item-count-box" type="text" value={this.itemCount(book.isbn)} />個 */}
-                            <input className="item-count-box" type="text" value={this.toQuantity()} onChange={this.changeInputBox} onFocus={this.handleFocus}/>個
+                            <input className="item-count-box" type="text" value={this.toQuantity()} onChange={this.changeInputBox} onFocus={this.handleFocus} />個
                                     </li>
                         <li className="cart-change">
                             <button onClick={this.changeBook(book.isbn, this.toQuantity())}>変更</button>
