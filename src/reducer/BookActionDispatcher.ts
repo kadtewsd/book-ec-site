@@ -19,14 +19,14 @@ export interface IAddingToCart extends IBookAction {
 export interface IChangingToCart extends IBookAction {
     isbn: string
 }
-const addingAction = (asin: string): IAddingToCart => {
+export const addingAction = (asin: string): IAddingToCart => {
     return {
         isbn: asin,
         type: new AddBookReducerType(),
     }
 };
 
-const changingAction = (asin: string, changed: number): IChangingToCart => {
+export const changingAction = (asin: string, changed: number): IChangingToCart => {
     return {
         isbn: asin,
         type: new ChangeBookReducerType(asin, changed),
